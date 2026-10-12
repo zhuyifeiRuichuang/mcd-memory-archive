@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>麦麦档案局 · 你的麦门真实档案</title>
+<style>
+:root{--ink:#1f2328;--ink2:#57606a;--ink3:#8c959f;--line:#d8dee4;
+--bg:#ffffff;--soft:#f6f8fa;--accent:#c8102e;--ok:#1a7f37;--warn:#9a6700;--bad:#cf222e}
+*{box-sizing:border-box}
+body{margin:0;padding:32px 16px 56px;background:#f0f2f5;color:var(--ink);
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:880px;margin:0 auto}
+header{background:var(--bg);border:1px solid var(--line);border-radius:14px;
+padding:28px 28px 22px;margin-bottom:18px}
+h1{margin:0;font-size:26px;font-weight:600;letter-spacing:-.2px}
+.sub{margin:6px 0 0;color:var(--ink2);font-size:14px}
+.stamp{margin-top:14px;color:var(--ink3);font-size:12px}
+.watermark{margin-top:14px;padding:10px 14px;border-radius:8px;
+background:#fff4ce;border:1px solid #d4a72c;color:#7a5b00;font-size:13px;font-weight:600}
+.module{background:var(--bg);border:1px solid var(--line);border-radius:14px;
+padding:22px 24px;margin-bottom:18px}
+h2{margin:0 0 6px;font-size:17px;font-weight:600}
+.mod-note{margin:0 0 16px;color:var(--ink3);font-size:12.5px}
+.pcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:10px;margin-bottom:16px}
+.pcard{background:var(--soft);border-radius:10px;padding:12px 10px;text-align:center}
+.pcard-num{font-size:20px;font-weight:600;font-variant-numeric:tabular-nums}
+.pcard-label{font-size:12px;color:var(--ink2);margin-top:2px}
+.bar{display:flex;height:14px;border-radius:7px;overflow:hidden;background:#eaeef2}
+.seg{height:100%}
+.seg-used{background:#8c959f}.seg-expired{background:#cf222e}
+.seg-avail{background:#1a7f37}.seg-frozen{background:#bf8700}.seg-none{background:#eaeef2}
+.legend{list-style:none;display:flex;flex-wrap:wrap;gap:16px;padding:0;margin:10px 0 0;font-size:12.5px;color:var(--ink2)}
+.legend li{display:flex;align-items:center;gap:6px}
+.dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+.dot-used{background:#8c959f}.dot-expired{background:#cf222e}
+.dot-avail{background:#1a7f37}.dot-frozen{background:#bf8700}
+.balance{margin:14px 0 0;font-size:12.5px;padding:10px 12px;border-radius:8px}
+.balance-ok{background:#eaf6ec;color:#1a5c2b}
+.balance-warn{background:#fff8e6;color:#7a5b00}
+table.state{width:100%;border-collapse:collapse;font-size:13px}
+table.state td{padding:10px 8px;border-top:1px solid var(--line);vertical-align:top}
+.td-label{font-weight:600;width:96px;white-space:nowrap}
+.td-text{color:var(--ink2)}
+.td-span{color:var(--ink3);font-size:12px;width:38%}
+.trace{color:var(--ink3);font-size:11.5px;margin-top:3px;font-family:ui-monospace,Consolas,monospace}
+.badge{display:inline-block;padding:2px 9px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap}
+.badge-ok{background:#eaf6ec;color:#1a7f37}
+.badge-empty{background:#eef1f4;color:#57606a}
+.badge-error{background:#ffebe9;color:#cf222e}
+.timeline{list-style:none;padding:0;margin:0}
+.tl-item{display:flex;gap:16px;padding:14px 0;border-top:1px solid var(--line)}
+.tl-item:first-child{border-top:0}
+.tl-when{width:104px;flex:none}
+.tl-date{display:block;font-size:13.5px;font-weight:600;font-variant-numeric:tabular-nums}
+.tl-time{display:block;font-size:12px;color:var(--ink3);font-variant-numeric:tabular-nums}
+.tl-body{flex:1;min-width:0}
+.tl-kind{display:inline-block;font-size:11px;font-weight:600;padding:1px 7px;border-radius:5px;margin-bottom:4px}
+.tl-orders .tl-kind{background:#fdeaed;color:#c8102e}
+.tl-prizes .tl-kind{background:#e7f0fe;color:#1257a8}
+.tl-title{font-size:14.5px;font-weight:600;word-break:break-word}
+.meta{font-size:12.5px;color:var(--ink2);margin-top:3px}
+.chip{display:inline-block;background:var(--soft);border:1px solid var(--line);
+border-radius:6px;padding:2px 8px;font-size:12.5px;margin:4px 5px 0 0;color:var(--ink)}
+.mcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.mcard{background:var(--soft);border-radius:10px;padding:14px}
+.mcard-head{font-size:13px;font-weight:600;margin-bottom:6px}
+.emptybox{background:var(--soft);border-radius:10px;padding:18px;color:var(--ink2);font-size:13.5px}
+.muted{color:var(--ink3);font-size:12.5px}
+.summary{list-style:none;padding:0;margin:0;font-size:14px}
+.summary li{padding:8px 0;border-top:1px solid var(--line)}
+.summary li:first-child{border-top:0}
+.summary b{font-size:16px;font-variant-numeric:tabular-nums}
+footer{max-width:880px;margin:0 auto;color:var(--ink3);font-size:12px;padding:0 4px}
+footer p{margin:6px 0}
+@media(max-width:600px){.tl-item{flex-direction:column;gap:4px}.tl-when{width:auto}.td-span{display:none}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<header>
+<h1>麦麦档案局</h1>
+<p class="sub">你的麦门真实档案</p>
+<p class="stamp">生成时间 2026-10-12T13:00:00+08:00 · 官方服务器时间 2026-10-12 13:00:00 / GMT+08:00 / 官方 traceId sample0000000000</p>
+<div class="watermark">样例数据 · 非本人真实数据 —— 本页由内置样例生成，用于演示档案册样式，不代表任何真实账户记录。</div>
+</header>
+
+<section class="module">
+  <h2>积分生命周期</h2>
+  <p class="mod-note">数据来自 <code>query-my-account</code>，官方 4.5.1。为账户当前快照，非时间序列。</p>
+  <div class="pcards"><div class="pcard"><div class="pcard-num">141760.9</div><div class="pcard-label">累计获得</div></div><div class="pcard"><div class="pcard-num">115474.1</div><div class="pcard-label">已使用</div></div><div class="pcard"><div class="pcard-num">18664.8</div><div class="pcard-label">已过期</div></div><div class="pcard"><div class="pcard-num">7592</div><div class="pcard-label">可用</div></div><div class="pcard"><div class="pcard-num">30</div><div class="pcard-label">冻结</div></div></div>
+  <div class="bar" role="img" aria-label="积分构成堆叠条"><div class="seg seg-used" style="width:81.46%" title="已使用 115474.1"></div><div class="seg seg-expired" style="width:13.17%" title="已过期 18664.8"></div><div class="seg seg-avail" style="width:5.36%" title="可用 7592"></div><div class="seg seg-frozen" style="width:0.02%" title="冻结 30"></div></div>
+  <ul class="legend">
+    <li><span class="dot dot-used"></span>已使用 115474.1</li>
+    <li><span class="dot dot-expired"></span>已过期 18664.8</li>
+    <li><span class="dot dot-avail"></span>可用 7592</li>
+    <li><span class="dot dot-frozen"></span>冻结 30</li>
+  </ul>
+  <p class="balance balance-ok">四段相加与累计获得完全吻合，账目自洽。</p>
+</section>
+
+<section class="module">
+  <h2>数据源状态</h2>
+  <p class="mod-note">三态严格区分：接口成功但无记录 ≠ 接口故障。两者在下方显示不同标识。</p>
+  <table class="state"><tbody><tr><td class="td-label">点餐订单</td><td><span class="badge badge-ok">正常</span></td><td class="td-text">3 条<div class="trace">traceId sample0000000002 · 服务端 2026-10-12 13:00:00</div></td><td class="td-span">近期（官方 4.2.14：仅返回最近 10 笔）</td></tr><tr><td class="td-label">商城订单</td><td><span class="badge badge-ok">正常</span></td><td class="td-text">2 条<div class="trace">traceId sample0000000003 · 服务端 2026-10-12 13:00:00</div></td><td class="td-span">近一年</td></tr><tr><td class="td-label">我的奖品</td><td><span class="badge badge-ok">正常</span></td><td class="td-text">2 条<div class="trace">traceId sample0000000004 · 服务端 2026-10-12 13:00:00</div></td><td class="td-span">全部奖品记录</td></tr></tbody></table>
+</section>
+
+<section class="module">
+  <h2>档案时间轴</h2>
+  <p class="mod-note">按时间倒序合并点餐订单与奖品记录。商城订单接口未提供下单时间字段，单独成栏，不参与排序。</p>
+  <ol class="timeline"><li class="tl-item tl-orders"><div class="tl-when"><span class="tl-date">2026-10-08</span><span class="tl-time">12:41:03</span></div><div class="tl-body"><span class="tl-kind">点餐</span><div class="tl-title">麦当劳XX地铁站餐厅</div><span class="chip">麦香鱼中套餐 ×1</span><span class="chip">麦辣鸡翅 ×1</span><div class="meta">订单已完成 实付 ¥40 单号 ****8821</div></div></li><li class="tl-item tl-orders"><div class="tl-when"><span class="tl-date">2026-09-21</span><span class="tl-time">08:12:44</span></div><div class="tl-body"><span class="tl-kind">点餐</span><div class="tl-title">麦当劳XX科技园餐厅</div><span class="chip">吉士蛋麦满分套餐 ×1</span><div class="meta">订单已完成 实付 ¥15.9 单号 ****4417</div></div></li><li class="tl-item tl-prizes"><div class="tl-when"><span class="tl-date">2026-09-02</span><span class="tl-time">21:28:52</span></div><div class="tl-body"><span class="tl-kind">奖品</span><div class="tl-title">一等奖：早餐卡7天</div><span class="chip">权益卡</span><div class="meta">权益卡 · 已使用 · 奖品来自: 九宫格-dsp3</div><div class="meta">可用时间: 2026.09.10-2026.10.09</div></div></li><li class="tl-item tl-orders"><div class="tl-when"><span class="tl-date">2026-08-30</span><span class="tl-time">22:05:19</span></div><div class="tl-body"><span class="tl-kind">点餐</span><div class="tl-title">麦当劳XX路店</div><span class="chip">双层吉士汉堡 ×1</span><span class="chip">可乐中杯 ×1</span><div class="meta">订单已完成 实付 ¥26.5 单号 ****2093</div></div></li><li class="tl-item tl-prizes"><div class="tl-when"><span class="tl-date">2026-07-14</span><span class="tl-time">20:03:11</span></div><div class="tl-body"><span class="tl-kind">奖品</span><div class="tl-title">参与奖：中薯条兑换券</div><span class="chip">商品券</span><div class="meta">商品券 · 已过期 · 奖品来自: 麦麦抽奖-0721</div><div class="meta">可用时间: 2026.07.15-2026.08.14</div></div></li></ol>
+</section>
+
+<section class="module">
+  <h2>麦麦商城订单（近一年）</h2>
+  <p class="mod-note">该接口返回体未提供下单时间字段，故单独成栏，不参与上方时间轴排序。</p>
+  <div class="mcards"><div class="mcard"><div class="mcard-head">麦麦商城 · 已完成</div><span class="chip">麦当劳对联名周边盲盒 ×1</span><div class="meta">单号 ****7702</div></div><div class="mcard"><div class="mcard-head">麦麦商城 · 已完成</div><span class="chip">麦麦省券包 ×1</span><div class="meta">单号 ****6510</div></div></div>
+</section>
+
+<section class="module">
+  <h2>档案小结</h2>
+  <ul class="summary">
+    <li><b>5</b> 条带时间戳记录</li>
+    <li><b>7</b> 条归档记录合计</li>
+    <li><span>最早 2026-07-14，最近 2026-10-08，覆盖 87 天</span></li>
+    <li><span>积分累计获得 141760.9，已过期 18664.8（数据来自官方接口）</span></li>
+  </ul>
+</section>
+
+</main>
+<footer>
+<p>本页由个人开发的参赛 Skill 生成，<b>非麦当劳官方产品</b>。餐品、价格、供应状态与账户数据一律以麦当劳官方渠道实时结果为准。</p>
+<p>已脱敏：账户标识（accountId）、券码（couponCode / couponId）不作输出；订单号仅显示后四位。</p>
+<p>数据来源：麦当劳中国 MCP（mcp.mcd.cn）—— query-my-account / order-list / mall-order-list / query-my-prizes / now-time-info。</p>
+</footer>
+<script>
+document.addEventListener('click',function(e){
+  var h=e.target.closest('.tl-item');
+  if(h){h.classList.toggle('open');}
+});
+</script>
+</body>
+</html>

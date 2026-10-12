@@ -1,0 +1,95 @@
+{
+  "fetched_at": "2026-10-12T13:39:39+08:00",
+  "mcp_url": "https://mcp.mcd.cn",
+  "generator": "mcd-memory-archive/1.0.0",
+  "sources": {
+    "clock": {
+      "source": "now-time-info",
+      "tool": "now-time-info",
+      "official_span": "服务器当前时间（官方文档 4.6.1）",
+      "status": "ok",
+      "code": 200,
+      "message": "请求成功",
+      "trace_id": "cc5d556bfd7d1f19f34b64fe33b0300c",
+      "server_time": "2026-10-12 13:39:40",
+      "queried_at": "2026-10-12T13:39:39+08:00",
+      "data": {
+        "timestamp": 1791783580660,
+        "datetime": "2026-10-12T13:39:40.660",
+        "formatted": "2026-10-12 13:39:40",
+        "date": "2026-10-12",
+        "year": 2026,
+        "month": 10,
+        "day": 12,
+        "dayOfWeek": "MONDAY",
+        "timezone": "GMT+08:00",
+        "offset": "+08:00",
+        "utc": "2026-10-12T05:39:40.660Z"
+      }
+    },
+    "account": {
+      "source": "query-my-account",
+      "tool": "query-my-account",
+      "official_span": "账户快照（非时间序列；官方文档 4.5.1）",
+      "status": "ok",
+      "code": 200,
+      "message": "请求成功",
+      "trace_id": "4d6ee2ea8971ce483f801a970e4b768b",
+      "server_time": "2026-10-12 13:39:40",
+      "queried_at": "2026-10-12T13:39:39+08:00",
+      "points": {
+        "available": 13.9,
+        "accumulative": 113.7,
+        "used": 0.0,
+        "expired": 99.8,
+        "frozen": 0.0,
+        "expire_this_month": 0.0,
+        "expire_last_month": 0.0,
+        "expire_next_month": 0.0,
+        "currency": "麦享会积分",
+        "balance_closed": true,
+        "balance_diff": 0.0
+      }
+    },
+    "orders": {
+      "source": "order-list",
+      "tool": "order-list",
+      "official_span": "近期（官方 4.2.14：仅返回最近 10 笔，无日期筛选与分页）",
+      "status": "empty",
+      "code": 200,
+      "message": "请求成功",
+      "trace_id": "e5c4fcb33b19a88e16ad6f361373f406",
+      "server_time": "2026-10-12 13:39:41",
+      "queried_at": "2026-10-12T13:39:40+08:00",
+      "count": 0,
+      "items": []
+    },
+    "mall_orders": {
+      "source": "mall-order-list",
+      "tool": "mall-order-list",
+      "official_span": "近一年（官方文档 4.5.5；游标分页 lastId + size<=10）",
+      "status": "empty",
+      "code": 200,
+      "message": "请求成功",
+      "trace_id": "5173f866d0a2a0247093d9bb9f38c57b",
+      "server_time": "2026-10-12 13:39:41",
+      "queried_at": "2026-10-12T13:39:40+08:00",
+      "count": 0,
+      "items": [],
+      "note": "该接口返回体未提供下单时间字段，故商城订单不参与时间轴排序，单独成栏。"
+    },
+    "prizes": {
+      "source": "query-my-prizes",
+      "tool": "query-my-prizes",
+      "official_span": "全部奖品记录（官方文档 4.3.4：不限活动，按中奖时间倒序）",
+      "status": "empty",
+      "code": 200,
+      "message": "请求成功",
+      "trace_id": "431a899b66bb49fe8e95ca1309c1341d",
+      "server_time": "2026-10-12 13:39:42",
+      "queried_at": "2026-10-12T13:39:40+08:00",
+      "count": 0,
+      "items": []
+    }
+  }
+}
